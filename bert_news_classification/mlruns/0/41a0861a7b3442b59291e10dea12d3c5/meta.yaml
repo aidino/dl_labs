@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/mlworkspace/dl_labs/bert_news_classification/mlruns/0/41a0861a7b3442b59291e10dea12d3c5/artifacts
+end_time: 1682520093989
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 41a0861a7b3442b59291e10dea12d3c5
+run_name: stylish-midge-868
+run_uuid: 41a0861a7b3442b59291e10dea12d3c5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1682519712552
+status: 4
+tags: []
+user_id: ngohongthai

@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/mlworkspace/dl_labs/bert_news_classification/mlruns/0/900b5bf46a554fdc914585788f6b5af9/artifacts
+end_time: 1682519353061
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 900b5bf46a554fdc914585788f6b5af9
+run_name: classy-midge-425
+run_uuid: 900b5bf46a554fdc914585788f6b5af9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1682519348270
+status: 4
+tags: []
+user_id: ngohongthai
