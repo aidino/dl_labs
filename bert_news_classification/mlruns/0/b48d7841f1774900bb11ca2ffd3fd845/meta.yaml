@@ -1,0 +1,15 @@
+artifact_uri: file:///Volumes/Data/projects/dl_labs/bert_news_classification/mlruns/0/b48d7841f1774900bb11ca2ffd3fd845/artifacts
+end_time: 1682502248853
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b48d7841f1774900bb11ca2ffd3fd845
+run_name: abrasive-bass-7
+run_uuid: b48d7841f1774900bb11ca2ffd3fd845
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1682502240723
+status: 4
+tags: []
+user_id: ngothai

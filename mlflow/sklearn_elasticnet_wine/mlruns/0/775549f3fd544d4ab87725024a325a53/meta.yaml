@@ -1,0 +1,15 @@
+artifact_uri: file:///Volumes/Data/projects/dl_labs/mlflow/sklearn_elasticnet_wine/mlruns/0/775549f3fd544d4ab87725024a325a53/artifacts
+end_time: 1682475678447
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 775549f3fd544d4ab87725024a325a53
+run_name: fun-kit-852
+run_uuid: 775549f3fd544d4ab87725024a325a53
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1682475673490
+status: 3
+tags: []
+user_id: ngothai

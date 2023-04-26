@@ -1,0 +1,15 @@
+artifact_uri: file:///Volumes/Data/projects/dl_labs/mlflow/mlruns/0/2c80a6ea5a504ee480ac984dfe7e34e3/artifacts
+end_time: 1682477017899
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2c80a6ea5a504ee480ac984dfe7e34e3
+run_name: zealous-rook-60
+run_uuid: 2c80a6ea5a504ee480ac984dfe7e34e3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1682477009715
+status: 3
+tags: []
+user_id: ngothai

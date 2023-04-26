@@ -1,0 +1,15 @@
+artifact_uri: file:///Volumes/Data/projects/dl_labs/mlflow/sklearn_elasticnet_wine/mlruns/0/9575f8f3008b47949d3eaa3ad2f40be1/artifacts
+end_time: 1682475692634
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 9575f8f3008b47949d3eaa3ad2f40be1
+run_name: serious-asp-319
+run_uuid: 9575f8f3008b47949d3eaa3ad2f40be1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1682475688282
+status: 3
+tags: []
+user_id: ngothai

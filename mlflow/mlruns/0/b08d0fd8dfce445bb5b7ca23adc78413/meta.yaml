@@ -1,0 +1,15 @@
+artifact_uri: file:///Volumes/Data/projects/dl_labs/mlflow/mlruns/0/b08d0fd8dfce445bb5b7ca23adc78413/artifacts
+end_time: 1682476873502
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b08d0fd8dfce445bb5b7ca23adc78413
+run_name: peaceful-asp-894
+run_uuid: b08d0fd8dfce445bb5b7ca23adc78413
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1682476708993
+status: 4
+tags: []
+user_id: ngothai

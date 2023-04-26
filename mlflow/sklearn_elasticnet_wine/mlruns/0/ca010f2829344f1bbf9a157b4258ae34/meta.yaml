@@ -1,0 +1,15 @@
+artifact_uri: file:///Volumes/Data/projects/dl_labs/mlflow/sklearn_elasticnet_wine/mlruns/0/ca010f2829344f1bbf9a157b4258ae34/artifacts
+end_time: 1682475670488
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ca010f2829344f1bbf9a157b4258ae34
+run_name: intrigued-fly-670
+run_uuid: ca010f2829344f1bbf9a157b4258ae34
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1682475665930
+status: 3
+tags: []
+user_id: ngothai

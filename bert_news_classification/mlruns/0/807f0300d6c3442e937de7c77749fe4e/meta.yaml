@@ -1,0 +1,15 @@
+artifact_uri: file:///Volumes/Data/projects/dl_labs/bert_news_classification/mlruns/0/807f0300d6c3442e937de7c77749fe4e/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 807f0300d6c3442e937de7c77749fe4e
+run_name: sassy-gull-764
+run_uuid: 807f0300d6c3442e937de7c77749fe4e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1682502329977
+status: 1
+tags: []
+user_id: ngothai
