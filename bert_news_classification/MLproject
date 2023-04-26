@@ -15,5 +15,4 @@ entry_points:
       num_samples: {type: int, default: 2000}
       dataset: {type: str, default: "20newsgroups"}
 
-    command: |
-          python bert_classification.py --trainer.max_epochs {max_epochs} --trainer.devices {devices} --trainer.strategy {strategy} --trainer.accelerator {accelerator} --data.batch_size {batch_size} --data.num_workers {num_workers} --data.num_samples {num_samples} --model.lr {learning_rate} --data.dataset {dataset}
+    command: python bert_classification.py --trainer.max_epochs {max_epochs} --trainer.devices {devices} --trainer.strategy {strategy} --trainer.accelerator {accelerator} --data.batch_size {batch_size} --data.num_workers {num_workers} --data.num_samples {num_samples} --model.lr {learning_rate} --data.dataset {dataset}
