@@ -1,6 +1,6 @@
 name: bert-classification
 
-python_env: python_env.yaml
+conda_env: conda.yaml
 
 entry_points:
   main:
@@ -13,14 +13,16 @@ entry_points:
       num_workers: {type: int, default: 3}
       learning_rate: {type: float, default: 0.001}
       num_samples: {type: int, default: 2000}
+      dataset: {type: str, default: "20newsgroups"}
 
     command: |
-          python bert_classification.py \
-            --trainer.max_epochs {max_epochs} \
-            --trainer.devices {devices} \
-            --trainer.strategy {strategy} \
-            --trainer.accelerator {accelerator} \
-            --data.batch_size {batch_size} \
-            --data.num_workers {num_workers} \
-            --data.num_samples {num_samples} \
-            --model.lr {learning_rate} \
+          python bert_classification.py 
+            --trainer.max_epochs {max_epochs} 
+            --trainer.devices {devices} 
+            --trainer.strategy {strategy} 
+            --trainer.accelerator {accelerator} 
+            --data.batch_size {batch_size} 
+            --data.num_workers {num_workers} 
+            --data.num_samples {num_samples} 
+            --model.lr {learning_rate} 
+            --data.dataset {dataset}

@@ -32,28 +32,38 @@ import mlflow.pytorch
 
 
 def get_20newsgroups(num_samples):
-    # read news.csv
-    df = pd.read_csv("news.csv")
-    assert df.shape[0] > num_samples 
-    df = df.sample(n=num_samples)
-    assert df.shape[0] == num_samples
-    return df
+    categories = ["alt.atheism", "talk.religion.misc", "comp.graphics", "sci.space"]
+    X, y = fetch_20newsgroups(subset="train", categories=categories, return_X_y=True)
+    return pd.DataFrame(data=X, columns=["description"]).assign(label=y).sample(n=num_samples)
+
+
+def get_ag_news(num_samples):
+    # reading the input
+    td.AG_NEWS(root="data", split=("train", "test"))
+    train_csv_path = "data/AG_NEWS/train.csv"
+    return (
+        pd.read_csv(train_csv_path, usecols=[0, 2], names=["label", "description"])
+        .assign(label=lambda df: df["label"] - 1)  # make labels zero-based
+        .sample(n=num_samples)
+    )
 
 
 class NewsDataset(IterDataPipe):
-    def __init__(self, tokenizer, source, max_length, num_samples):
+    def __init__(self, tokenizer, source, max_length, num_samples, dataset="20newsgroups"):
         """
         Custom Dataset - Converts the input text and label to tensor
         :param tokenizer: bert tokenizer
         :param source: data source - Either a dataframe or DataPipe
         :param max_length: maximum length of the news text
         :param num_samples: number of samples to load
+        :param dataset: Dataset type - 20newsgroups or ag_news
         """
         super().__init__()
         self.source = source
         self.start = 0
         self.tokenizer = tokenizer
         self.max_length = max_length
+        self.dataset = dataset
         self.end = num_samples
 
     def __iter__(self):
@@ -68,8 +78,12 @@ class NewsDataset(IterDataPipe):
             iter_end = min(iter_start + per_worker, self.end)
 
         for idx in range(iter_start, iter_end):
-            review = str(self.source["description"].iloc[idx])
-            target = int(self.source["label"].iloc[idx])
+            if self.dataset == "20newsgroups":
+                review = str(self.source["description"].iloc[idx])
+                target = int(self.source["label"].iloc[idx])
+            else:
+                target, review = self.source[idx]
+                target -= 1
             encoding = self.tokenizer.encode_plus(
                 review,
                 add_special_tokens=True,
@@ -95,7 +109,7 @@ class BertDataModule(L.LightningDataModule):
         Initialization of inherited lightning data module
         """
         super().__init__()
-        self.PRE_TRAINED_MODEL_NAME = "distilbert-base-multilingual-cased"
+        self.PRE_TRAINED_MODEL_NAME = "bert-base-uncased"
         self.train_dataset = None
         self.val_dataset = None
         self.test_dataset = None
@@ -104,6 +118,7 @@ class BertDataModule(L.LightningDataModule):
         self.tokenizer = None
         self.batch_size = batch_size
         self.num_workers = num_workers
+        self.dataset = dataset
         self.num_samples = num_samples
         self.train_count = None
         self.val_count = None
@@ -118,24 +133,47 @@ class BertDataModule(L.LightningDataModule):
         :param stage: Stage - training or testing
         """
         self.tokenizer = BertTokenizer.from_pretrained(self.PRE_TRAINED_MODEL_NAME)
-        num_samples = self.num_samples
-        self.news_group_df = get_20newsgroups(num_samples)
+        if self.dataset == "20newsgroups":
+            num_samples = self.num_samples
+            self.news_group_df = (
+                get_20newsgroups(num_samples)
+                if self.dataset == "20newsgroups"
+                else get_ag_news(num_samples)
+            )
+        else:
+            train_iter, test_iter = AG_NEWS()
+            self.train_dataset = to_map_style_dataset(train_iter)
+            self.test_dataset = to_map_style_dataset(test_iter)
 
         if stage == "fit":
-            self.train_dataset, self.test_dataset = train_test_split(
-            self.news_group_df,
-            test_size=0.3,
-            random_state=self.RANDOM_SEED,
-            stratify=self.news_group_df["label"],)
-            self.val_dataset, self.test_dataset = train_test_split(
-                self.test_dataset,
-                test_size=0.5,
-                random_state=self.RANDOM_SEED,
-                stratify=self.test_dataset["label"],)
+            print(f"===== Dataset: {self.dataset} =====")
+            if self.dataset == "20newsgroups":
+                self.train_dataset, self.test_dataset = train_test_split(
+                    self.news_group_df,
+                    test_size=0.3,
+                    random_state=self.RANDOM_SEED,
+                    stratify=self.news_group_df["label"],
+                )
+                self.val_dataset, self.test_dataset = train_test_split(
+                    self.test_dataset,
+                    test_size=0.5,
+                    random_state=self.RANDOM_SEED,
+                    stratify=self.test_dataset["label"],
+                )
 
-            self.train_count = len(self.train_dataset)
-            self.val_count = len(self.val_dataset)
-            self.test_count = len(self.test_dataset)
+                self.train_count = len(self.train_dataset)
+                self.val_count = len(self.val_dataset)
+                self.test_count = len(self.test_dataset)
+            else:
+                num_train = int(len(self.train_dataset) * 0.95)
+                self.train_dataset, self.val_dataset = random_split(
+                    self.train_dataset, [num_train, len(self.train_dataset) - num_train]
+                )
+
+                self.train_count = self.num_samples
+                self.val_count = int(self.train_count / 10)
+                self.test_count = int(self.train_count / 10)
+                self.train_count = self.train_count - (self.val_count + self.test_count)
 
             print("Number of samples used for training: {}".format(self.train_count))
             print("Number of samples used for validation: {}".format(self.val_count))
@@ -147,7 +185,6 @@ class BertDataModule(L.LightningDataModule):
 
         :param df: Input dataframe
         :param tokenizer: bert tokenizer
-        :count: number of samples to load
 
 
         :return: Returns the constructed dataloader
@@ -189,13 +226,17 @@ class BertNewsClassifier(L.LightningModule):
         super().__init__()
         self.dataset = dataset
         self.lr = lr
-        self.PRE_TRAINED_MODEL_NAME = "distilbert-base-multilingual-cased"
+        self.PRE_TRAINED_MODEL_NAME = "bert-base-uncased"
         self.bert_model = BertModel.from_pretrained(self.PRE_TRAINED_MODEL_NAME)
         for param in self.bert_model.parameters():
             param.requires_grad = False
         self.drop = nn.Dropout(p=0.2)
         # assigning labels
-        self.class_names = ["alt.atheism", "talk.religion.misc", "comp.graphics", "sci.space"]
+        self.class_names = (
+            ["alt.atheism", "talk.religion.misc", "comp.graphics", "sci.space"]
+            if self.dataset == "20newsgroups"
+            else ["world", "Sports", "Business", "Sci/Tech"]
+        )
         n_classes = len(self.class_names)
 
         self.fc1 = nn.Linear(self.bert_model.config.hidden_size, 512)
@@ -312,6 +353,7 @@ class BertNewsClassifier(L.LightningModule):
 
 class BertLightningCLI(LightningCLI):
     def add_arguments_to_parser(self, parser):
+        print(f"Parser====> {parser}")
         parser.link_arguments("data.dataset", "model.dataset")
 
 
