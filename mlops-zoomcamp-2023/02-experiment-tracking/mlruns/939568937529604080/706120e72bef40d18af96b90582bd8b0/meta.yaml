@@ -1,0 +1,15 @@
+artifact_uri: file:///Volumes/Data/projects/dl_labs/mlops-zoomcamp-2023/02-experiment-tracking/mlruns/939568937529604080/706120e72bef40d18af96b90582bd8b0/artifacts
+end_time: 1684462349939
+entry_point_name: ''
+experiment_id: '939568937529604080'
+lifecycle_stage: active
+run_id: 706120e72bef40d18af96b90582bd8b0
+run_name: thundering-slug-837
+run_uuid: 706120e72bef40d18af96b90582bd8b0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1684462344771
+status: 3
+tags: []
+user_id: ngothai
