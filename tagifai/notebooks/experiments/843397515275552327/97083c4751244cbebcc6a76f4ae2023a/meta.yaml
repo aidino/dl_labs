@@ -1,0 +1,15 @@
+artifact_uri: file:///Volumes/Data/projects/dl_labs/tagifai/notebooks/experiments/843397515275552327/97083c4751244cbebcc6a76f4ae2023a/artifacts
+end_time: 1684829393929
+entry_point_name: ''
+experiment_id: '843397515275552327'
+lifecycle_stage: active
+run_id: 97083c4751244cbebcc6a76f4ae2023a
+run_name: sgd
+run_uuid: 97083c4751244cbebcc6a76f4ae2023a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1684829390416
+status: 3
+tags: []
+user_id: ngothai
