@@ -11,12 +11,10 @@ from sklearn.model_selection import train_test_split
 from config import config
 
 
-def replace_oos_labels(
-    df: pd.DataFrame, labels: List, label_col: str, oos_label: str = "other"
-) -> pd.DataFrame:
-    """
-    Replace out of scope (OOS) labels.
+def replace_oos_labels(df: pd.DataFrame, labels: List, label_col: str, oos_label: str = "other"):
 
+    """Replace out of scope (OOS) labels.
+    
     Args:
         df (pd.DataFrame): Pandas DataFrame with data.
         labels (List): list of accepted labels.
@@ -25,15 +23,15 @@ def replace_oos_labels(
 
     Returns:
         pd.DataFrame: Dataframe with replaced OOS labels.
-    """å
-    ooså
-    df[label_col] = df[label_col].apply(lambda x: oos_label if x in oos_tags else x)
+    """
+    oos_tags = [item for item in df[label_col].unique() if item not in labels]
+    df[label_col] = df[label_col].apply(
+        lambda x: oos_label if x in oos_tags else x)
     return df
 
 
-def replace_minority_labels(
-    df: pd.DataFrame, label_col: str, min_freq: int, new_label: str = "other"
-) -> pd.DataFrame:
+def replace_minority_labels(df: pd.DataFrame, label_col: str, min_freq: int, new_label: str = "other"):
+    
     """Replace minority labels with another label.
 
     Args:
@@ -47,16 +45,15 @@ def replace_minority_labels(
     """
     labels = Counter(df[label_col].values)
     labels_above_freq = Counter(
-        label for label in labels.elements() if (labels[label] >= min_freq)
-    )
+        label for label in labels.elements() if (labels[label] >= min_freq))
     df[label_col] = df[label_col].apply(
-        lambda label: label if label in labels_above_freq else None
-    )
+        lambda label: label if label in labels_above_freq else None)
     df[label_col] = df[label_col].fillna(new_label)
     return df
 
 
-def clean_text(text: str, lower: bool, stem: bool, stopwords=config.STOPWORDS) -> str:
+def clean_text(text: str, lower: bool, stem: bool, stopwords=config.STOPWORDS):
+    
     """Clean raw text.
 
     Args:
@@ -90,16 +87,14 @@ def clean_text(text: str, lower: bool, stem: bool, stopwords=config.STOPWORDS) -
     # Stemming
     if stem:
         stemmer = PorterStemmer()
-        text = " ".join(
-            [stemmer.stem(word, to_lowercase=lower) for word in text.split(" ")]
-        )
+        text = " ".join([stemmer.stem(word, to_lowercase=lower)
+                        for word in text.split(" ")])
 
     return text
 
 
-def preprocess(
-    df: pd.DataFrame, lower: bool, stem: bool, min_freq: int
-) -> pd.DataFrame:
+def preprocess(df: pd.DataFrame, lower: bool, stem: bool, min_freq: int):
+    
     """Preprocess the data.
 
     Args:
@@ -111,6 +106,7 @@ def preprocess(
     Returns:
         pd.DataFrame: Dataframe with preprocessed data.
     """
+    
     df["text"] = df.title + " " + df.description  # feature engineering
     df.text = df.text.apply(clean_text, lower=lower, stem=stem)  # clean text
     df = replace_oos_labels(
@@ -124,6 +120,7 @@ def preprocess(
 
 
 class LabelEncoder:
+    
     """Encode labels into unique indices.
 
     ```python
@@ -134,7 +131,8 @@ class LabelEncoder:
     ```
     """
 
-    def __init__(self, class_to_index: Dict = {}) -> None:
+    def __init__(self, class_to_index: Dict = {}):
+        
         """Initialize the label encoder.
 
         Args:
@@ -166,7 +164,7 @@ class LabelEncoder:
         self.classes = list(self.class_to_index.keys())
         return self
 
-    def encode(self, y: List) -> np.ndarray:
+    def encode(self, y: List):
         """Encode a list of raw labels.
 
         Args:
@@ -180,7 +178,7 @@ class LabelEncoder:
             encoded[i] = self.class_to_index[item]
         return encoded
 
-    def decode(self, y: List) -> List:
+    def decode(self, y: List):
         """Decode a list of indices.
 
         Args:
@@ -194,7 +192,7 @@ class LabelEncoder:
             classes.append(self.index_to_class[item])
         return classes
 
-    def save(self, fp: str) -> None:
+    def save(self, fp: str):
         """Save class instance to JSON file.
 
         Args:
@@ -219,7 +217,7 @@ class LabelEncoder:
         return cls(**kwargs)
 
 
-def get_data_splits(X: pd.Series, y: np.ndarray, train_size: float = 0.7) -> Tuple:
+def get_data_splits(X: pd.Series, y: np.ndarray, train_size: float = 0.7):
     """Generate balanced data splits.
 
     Args:
@@ -230,6 +228,8 @@ def get_data_splits(X: pd.Series, y: np.ndarray, train_size: float = 0.7) -> Tup
     Returns:
         Tuple: data splits as Numpy arrays.
     """
-    X_train, X_, y_train, y_ = train_test_split(X, y, train_size=train_size, stratify=y)
-    X_val, X_test, y_val, y_test = train_test_split(X_, y_, train_size=0.5, stratify=y_)
+    X_train, X_, y_train, y_ = train_test_split(
+        X, y, train_size=train_size, stratify=y)
+    X_val, X_test, y_val, y_test = train_test_split(
+        X_, y_, train_size=0.5, stratify=y_)
     return X_train, X_val, X_test, y_train, y_val, y_test
