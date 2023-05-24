@@ -1,6 +1,5 @@
 import json
 from argparse import Namespace
-from typing import Dict
 
 import mlflow
 import numpy as np

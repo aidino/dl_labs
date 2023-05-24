@@ -3,7 +3,6 @@ import tempfile
 import warnings
 from argparse import Namespace
 from pathlib import Path
-from typing import Dict
 
 import joblib
 import mlflow
