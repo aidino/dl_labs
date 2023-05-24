@@ -4,7 +4,6 @@ import numpy as np
 
 
 def custom_predict(y_prob: np.ndarray, threshold: float, index: int):
-    
     """Custom predict function that defaults
     to an index if conditions are not met.
 
@@ -21,7 +20,6 @@ def custom_predict(y_prob: np.ndarray, threshold: float, index: int):
 
 
 def predict(texts: List, artifacts: Dict):
-    
     """Predict tags for given texts.
 
     Args:

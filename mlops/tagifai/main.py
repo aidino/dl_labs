@@ -25,7 +25,6 @@ app = typer.Typer()
 
 @app.command()
 def elt_data():
-    
     """Extract, load and transform our data assets."""
     # Extract + Load
     projects = pd.read_csv(config.PROJECTS_URL)
@@ -46,8 +45,8 @@ def train_model(
     args_fp: str = "config/args.json",
     experiment_name: str = "baselines",
     run_name: str = "sgd",
-    test_run: bool = False):
-    
+    test_run: bool = False,
+):
     """Train a model given arguments.
 
     Args:
@@ -93,8 +92,8 @@ def train_model(
 
 @app.command()
 def optimize(
-    args_fp: str = "config/args.json", study_name: str = "optimization", num_trials: int = 20):
-    
+    args_fp: str = "config/args.json", study_name: str = "optimization", num_trials: int = 20
+):
     """Optimize hyperparameters.
 
     Args:
@@ -126,7 +125,6 @@ def optimize(
 
 
 def load_artifacts(run_id: str = None):
-    
     """Load artifacts for a given run_id.
 
     Args:
@@ -160,7 +158,6 @@ def load_artifacts(run_id: str = None):
 
 @app.command()
 def predict_tag(text: str = "", run_id: str = None):
-    
     """Predict tag for text.
 
     Args:

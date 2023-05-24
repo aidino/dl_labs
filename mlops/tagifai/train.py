@@ -16,7 +16,6 @@ from tagifai import data, evaluate, predict, utils
 
 
 def train(args: Namespace, df: pd.DataFrame, trial: optuna.trial._trial.Trial = None):
-    
     """Train model on data.
 
     Args:
@@ -116,7 +115,6 @@ def train(args: Namespace, df: pd.DataFrame, trial: optuna.trial._trial.Trial = 
 
 
 def objective(args: Namespace, df: pd.DataFrame, trial: optuna.trial._trial.Trial):
-    
     """Objective function for optimization trials.
 
     Args:
