@@ -1,0 +1,15 @@
+artifact_uri: file:///Volumes/Data/projects/dl_labs/mlops/stores/model/396791015065868961/712a9bccb1dd4fdfbeec7d229ebb6115/artifacts
+end_time: 1684899252809
+entry_point_name: ''
+experiment_id: '396791015065868961'
+lifecycle_stage: active
+run_id: 712a9bccb1dd4fdfbeec7d229ebb6115
+run_name: '14'
+run_uuid: 712a9bccb1dd4fdfbeec7d229ebb6115
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1684899252790
+status: 3
+tags: []
+user_id: ngothai
