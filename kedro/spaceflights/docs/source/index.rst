@@ -1,14 +1,15 @@
-.. spaceflights documentation master file, created by sphinx-quickstart.
+.. SpaceFlights documentation master file, created by
+   sphinx-quickstart on Wed Jun 21 09:35:55 2023.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to project spaceflights's API docs!
-=============================================
+Welcome to SpaceFlights's documentation!
+========================================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
+   :caption: Contents:
 
-   modules
 
 
 Indices and tables
