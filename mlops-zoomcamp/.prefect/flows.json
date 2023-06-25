@@ -1,3 +1,4 @@
 {
-  "nyc-taxi-flow": "orchestrate_pre_prefect.py:main_flow"
+  "nyc-taxi-flow": "orchestrate_pre_prefect.py:main_flow",
+  "ride-duration-prediction": "deployment/batch/score.py:ride_duration_prediction"
 }
